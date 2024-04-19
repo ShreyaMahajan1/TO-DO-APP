@@ -1,10 +1,10 @@
-const ToDo = require('./todoModel');
+const ToDo =require('./todoModel')
 
-const add = (req, res) => {
-    var validationerrors = [];
-    const userId = req.user.id; 
+add = (req, res) => {
+    var validationerrors = []
+   
     if (!req.body.ToDoTitle)
-        validationerrors.push("ToDo Title is required");
+        validationerrors.push("ToDo Title is required")
 
     if (validationerrors.length > 0) {
         res.json({
@@ -12,17 +12,19 @@ const add = (req, res) => {
             success: false,
             message: "Validation error",
             errors: validationerrors
-        });
+        })
     }
     else {
-        // Duplicate check
+        //duplicate
         ToDo.findOne({ ToDoTitle: req.body.ToDoTitle })
             .then(content => {
+                // console.log(content)
                 if (!content) {
-                    // Insert new ToDo
-                    let ToDoObj = new ToDo();
-                    ToDoObj.ToDoTitle = req.body.ToDoTitle;
-                    ToDoObj.status = req.body.status || 'pending'; // Default status is 'pending'
+
+                    //insert
+                    let ToDoObj = new ToDo()
+                    ToDoObj.ToDoTitle = req.body.ToDoTitle
+
 
                     ToDoObj.save()
                         .then(ToDoData => {
@@ -31,7 +33,7 @@ const add = (req, res) => {
                                 success: true,
                                 message: "Record Inserted",
                                 data: ToDoData
-                            });
+                            })
                         })
                         .catch(err => {
                             res.json({
@@ -39,8 +41,8 @@ const add = (req, res) => {
                                 success: false,
                                 message: "Internal Server Error",
                                 errors: err.message
-                            });
-                        });
+                            })
+                        })
                 }
                 else {
                     res.json({
@@ -48,8 +50,9 @@ const add = (req, res) => {
                         success: false,
                         message: "Record already exists",
                         data: content
-                    });
+                    })
                 }
+
             })
             .catch(err => {
                 res.json({
@@ -57,13 +60,17 @@ const add = (req, res) => {
                     success: false,
                     message: "Internal Server Error",
                     errors: err.message
-                });
-            });
-    }
-}
+                })
+            })
 
-const getall = async (req, res) => {
-    var totalcount = await ToDo.find().countDocuments().exec();
+    }
+
+
+}
+getall = async (req, res) => {
+
+    var totalcount = await ToDo.find().countDocuments().exec()
+
     ToDo.find()
         .then(ToDoData => {
             res.json({
@@ -72,7 +79,7 @@ const getall = async (req, res) => {
                 message: "Data loaded",
                 total: totalcount,
                 data: ToDoData
-            });
+            })
         })
         .catch(err => {
             res.json({
@@ -80,19 +87,18 @@ const getall = async (req, res) => {
                 success: false,
                 message: "Internal Server Error",
                 errors: err.message
-            });
-        });
+            })
+        })
 }
-
-const getpagination = (req, res) => {
-    var lim = 2;
-    var skipcount = 0;
+getpagination = (req, res) => {
+    var lim = 2
+    var skipcount = 0
 
     if (req.body.pageno > 1) {
-        skipcount = (req.body.pageno - 1) * lim;
+        skipcount = (req.body.pageno - 1) * lim
     }
 
-    ToDo.find({ status: req.body.status }) // Filter by status
+    ToDo.find()
         .limit(lim)
         .skip(skipcount)
         .sort({ createdAt: +1 })
@@ -102,7 +108,7 @@ const getpagination = (req, res) => {
                 success: true,
                 message: "Data loaded",
                 data: ToDoData
-            });
+            })
         })
         .catch(err => {
             res.json({
@@ -110,15 +116,15 @@ const getpagination = (req, res) => {
                 success: false,
                 message: "Internal Server Error",
                 errors: err.message
-            });
-        });
+            })
+        })
 }
 
-const getsingle = (req, res) => {
-    validationerrors = [];
+getsingle = (req, res) => {
+    validationerrors = []
 
     if (!req.body._id)
-        validationerrors.push("_id is required");
+        validationerrors.push("_id is required")
 
     if (validationerrors.length > 0) {
         res.json({
@@ -126,9 +132,9 @@ const getsingle = (req, res) => {
             success: false,
             message: "Validation error",
             errors: validationerrors
-        });
+        })
     } else {
-        // Check existence of record
+        //existance of record
         ToDo.findOne({ _id: req.body._id })
             .then(ToDoData => {
                 if (!ToDoData) {
@@ -136,7 +142,7 @@ const getsingle = (req, res) => {
                         status: 404,
                         success: false,
                         message: "Record not found"
-                    });
+                    })
                 }
                 else {
                     res.json({
@@ -144,7 +150,7 @@ const getsingle = (req, res) => {
                         success: true,
                         message: "Data loaded",
                         data: ToDoData
-                    });
+                    })
                 }
             })
             .catch(err => {
@@ -153,16 +159,16 @@ const getsingle = (req, res) => {
                     success: false,
                     message: "Internal Server Error",
                     errors: err.message
-                });
-            });
+                })
+            })
     }
 }
 
-const deletedata = (req, res) => {
-    validationerrors = [];
+deletedata = (req, res) => {
+    validationerrors = []
 
     if (!req.body._id)
-        validationerrors.push("_id is required");
+        validationerrors.push("_id is required")
 
     if (validationerrors.length > 0) {
         res.json({
@@ -170,9 +176,9 @@ const deletedata = (req, res) => {
             success: false,
             message: "Validation error",
             errors: validationerrors
-        });
+        })
     } else {
-        // Check existence of record
+        //existance of record
         ToDo.findOne({ _id: req.body._id })
             .then(ToDoData => {
                 if (!ToDoData) {
@@ -180,17 +186,18 @@ const deletedata = (req, res) => {
                         status: 404,
                         success: false,
                         message: "Record not found"
-                    });
+                    })
                 }
                 else {
-                    // Delete 
+                    //delete 
                     ToDo.deleteOne({ _id: req.body._id })
                         .then(() => {
+
                             res.json({
                                 status: 200,
                                 success: true,
                                 message: "Record Deleted"
-                            });
+                            })
                         })
                         .catch(err => {
                             res.json({
@@ -198,8 +205,8 @@ const deletedata = (req, res) => {
                                 success: false,
                                 message: "Unable to delete record",
                                 errors: err.message
-                            });
-                        });
+                            })
+                        })
                 }
             })
             .catch(err => {
@@ -208,16 +215,15 @@ const deletedata = (req, res) => {
                     success: false,
                     message: "Internal Server Error",
                     errors: err.message
-                });
-            });
+                })
+            })
     }
 }
-
-const updatedata = (req, res) => {
-    validationerrors = [];
+updatedata = (req, res) => {
+    validationerrors = []
 
     if (!req.body._id)
-        validationerrors.push("_id is required");
+        validationerrors.push("_id is required")
 
     if (validationerrors.length > 0) {
         res.json({
@@ -225,9 +231,9 @@ const updatedata = (req, res) => {
             success: false,
             message: "Validation error",
             errors: validationerrors
-        });
+        })
     } else {
-        // Check existence of record
+        //existance of record
         ToDo.findOne({ _id: req.body._id })
             .then(ToDoData => {
                 if (!ToDoData) {
@@ -235,12 +241,13 @@ const updatedata = (req, res) => {
                         status: 404,
                         success: false,
                         message: "Record not found"
-                    });
+                    })
                 }
                 else {
-                    // Update
+                    //update
+
                     if (req.body.ToDoTitle)
-                        ToDoData.ToDoTitle = req.body.ToDoTitle;
+                        ToDoData.ToDoTitle = req.body.ToDoTitle
 
                     ToDoData.save()
                         .then(saveRes => {
@@ -249,7 +256,7 @@ const updatedata = (req, res) => {
                                 success: true,
                                 message: "Record Updated",
                                 data: saveRes
-                            });
+                            })
                         })
                         .catch(err => {
                             res.json({
@@ -257,8 +264,8 @@ const updatedata = (req, res) => {
                                 success: false,
                                 message: "Internal Server error",
                                 errors: err.message
-                            });
-                        });
+                            })
+                        })
                 }
             })
             .catch(err => {
@@ -267,16 +274,17 @@ const updatedata = (req, res) => {
                     success: false,
                     message: "Internal Server Error",
                     errors: err.message
-                });
-            });
+                })
+            })
     }
 }
 
-const softdelete = (req, res) => {
-    validationerrors = [];
+softdelete = (req, res) => {
+    // console.log("Soft delete request body:", req.body);
+    validationerrors = []
 
     if (!req.body._id)
-        validationerrors.push("_id is required");
+        validationerrors.push("_id is required")
 
     if (validationerrors.length > 0) {
         res.json({
@@ -284,33 +292,47 @@ const softdelete = (req, res) => {
             success: false,
             message: "Validation error",
             errors: validationerrors
-        });
+        })
     } else {
+        // Log soft delete status
+        // console.log("Soft delete status:", req.body.status);
+
         // Find ToDo by ID
         ToDo.findOne({ _id: req.body._id })
             .then(ToDoData => {
+                console.log(ToDoData)
                 if (!ToDoData) {
                     res.json({
                         status: 404,
                         success: false,
                         message: "Record not found"
-                    });
+                    })
                 } else {
                     // Update status field
-                    if (req.body.status)
+                    // console.log(req.body.status)
+                    if (!req.body.status)
                         ToDoData.status = req.body.status;
+                    
 
                     // Save updated ToDo
                     ToDoData.save()
                         .then(saveRes => {
+                            // Log saved ToDo data
+                            console.log("Saved ToDo data:", saveRes);
+
+                            // Send response
                             res.json({
                                 status: 200,
                                 success: true,
-                                message: "Record status updated successfully",
+                                message: "Record soft deleted successfully",
                                 data: saveRes
                             });
                         })
                         .catch(err => {
+                            // Log error saving ToDo data
+                            console.error("Error saving ToDo data:", err);
+
+                            // Send error response
                             res.json({
                                 status: 500,
                                 success: false,
@@ -321,6 +343,10 @@ const softdelete = (req, res) => {
                 }
             })
             .catch(err => {
+                // Log internal server error
+                console.error("Internal Server Error:", err);
+
+                // Send error response
                 res.json({
                     status: 500,
                     success: false,
@@ -330,6 +356,7 @@ const softdelete = (req, res) => {
             });
     }
 }
+
 
 module.exports = {
     add,
@@ -339,4 +366,7 @@ module.exports = {
     deletedata,
     updatedata,
     softdelete
-};
+}
+
+
+

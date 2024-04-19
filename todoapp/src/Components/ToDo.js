@@ -128,15 +128,15 @@ function TodoList() {
 
                                 <div className="card col-lg-12 col-md-12">
                                     <div className="card-body">
-                                        <div className="pt-2 pb-2">
-                                            <h5 className="card-title text-center pb-0 fs-3">To Do List</h5>
-                                            <p className="text-center small">Add, edit, and delete your todos</p>
+                                        <div className="pt-2 pb-0">
+                                            <h5 className="card-title text-center pb-0 fs-1">To Do List</h5>
+                                            <p className="text-center small pb-2">Add, edit, and delete your todos</p>
                                         </div>
                                         <form className="mb-3">
                                             <div className="mb-3">
-                                                <b><h1 htmlFor="todoInput" className="form-label mb-2">
+                                                <h3 htmlFor="todoInput" className="form-label">
                                                     Add Todo
-                                                </h1></b>
+                                                </h3>
                                                 <div className="input-group">
                                                     <input
                                                         type="text"
@@ -167,7 +167,7 @@ function TodoList() {
                                                         <span className={todo.isCompleted ? 'text-decoration-line-through ms-2' : 'ms-2'}>{todo.ToDoTitle}</span>
                                                     </div>
                                                     <div className="btn-group" role="group">
-                                                        <button className="btn btn-warning me-2 ms-3" onClick={() => handleEditTodo(index)}>
+                                                        <button className="btn btn-warning me-2" onClick={() => handleEditTodo(index)}>
                                                             <FontAwesomeIcon icon={faEdit} />
                                                         </button>
                                                         <button className="btn btn-danger" onClick={() => handleRemoveTodo(todo._id)}>
