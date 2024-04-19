@@ -4,10 +4,11 @@ import './App.css';
 import { BrowserRouter ,Routes ,Route } from 'react-router-dom';
 import Login from './Components/Login';
 import Error from './Components/Error';
-import ToDo from './Components/ToDo';
+
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
 import UserRegister from './Components/UserRegister';
+import TodoList from './Components/ToDo';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
       <Routes>
          <Route path="/" element={<Login/>}/> 
          <Route path="/UserRegister" element={<UserRegister/>}/> 
-         <Route path="/ToDo" element={<ToDo/>}/> 
+         <Route path="/ToDo" element={<TodoList/>}/> 
         <Route path="/*" element={<Error/>}/> 
         
         </Routes>

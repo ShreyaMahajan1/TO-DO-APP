@@ -1,11 +1,21 @@
-const mongoose = require("mongoose")
+// todoModel.js
 
-const ToDoSchema = new mongoose.Schema({
-    ToDoTitle: { type: String, default: null },
-   
-    
-    status: { type: Boolean},
-    createdAt: { type: Date, default: Date.now() },
-})
+const mongoose = require('mongoose');
 
-module.exports = new mongoose.model("todos",ToDoSchema)
+const todoSchema = new mongoose.Schema({
+    ToDoTitle: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'completed'],
+        default: 'pending'
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+module.exports = mongoose.model('ToDo', todoSchema);

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { PacmanLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import ApiServices from './ApiServices';
 
@@ -10,6 +12,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [load, setLoad] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const nav = useNavigate();
 
@@ -19,19 +22,19 @@ export default function Register() {
     let data = {
       email: email,
       password: password,
-      name:name
+      name: name
     };
 
     ApiServices.getRegister(data)
       .then((res) => {
         if (res.data.success === true) {
-         
+
           toast.success("Register successfully");
           setTimeout(() => {
             nav("/");
           }, 2000);
         } else {
-         
+
           toast.error("invalid email");
           setTimeout(() => {
             setLoad(false);
@@ -80,7 +83,7 @@ export default function Register() {
                           </p>
                         </div>
                         <form className="row g-3 needs-validation" noValidate="">
-                        <div className="col-12">
+                          <div className="col-12">
                             <label htmlFor="yourUsername" className="form-label">
                               Username
                             </label>
@@ -92,7 +95,7 @@ export default function Register() {
                                 id="yourUsername"
                                 required=""
                                 value={name}
-                                onChange={(e) => { setName(e.target.value) }} 
+                                onChange={(e) => { setName(e.target.value) }}
                               />
                               <div className="invalid-feedback">
                                 Please enter your username.
@@ -117,7 +120,7 @@ export default function Register() {
                                 id="yourUsername"
                                 required=""
                                 value={email}
-                                onChange={(e) => { setEmail(e.target.value) }} 
+                                onChange={(e) => { setEmail(e.target.value) }}
                               />
                               <div className="invalid-feedback">
                                 Please enter your username.
@@ -128,17 +131,22 @@ export default function Register() {
                             <label htmlFor="yourPassword" className="form-label">
                               Password
                             </label>
-                            <input
-                              type="password"
-                              name="password"
-                              className="form-control"
-                              id="yourPassword"
-                              required=""
-                              value={password}
-                              onChange={(e) => { setPassword(e.target.value) }} 
-                            />
-                            <div className="invalid-feedback">
-                              Please enter your password!
+                            <div className="input-group has-validation">
+                              <input
+                                type={showPassword ? "text" : "password"} // Toggle password visibility
+                                name="password"
+                                className="form-control"
+                                id="yourPassword"
+                                required=""
+                                value={password}
+                                onChange={(e) => { setPassword(e.target.value) }}
+                              />
+                              <button className="btn btn-outline-secondary" type="button" onClick={() => setShowPassword(!showPassword)}>
+                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                              </button>
+                              <div className="invalid-feedback">
+                                Please enter your password!
+                              </div>
                             </div>
                           </div>
                           <div className="col-12">
@@ -172,7 +180,7 @@ export default function Register() {
                         </form>
                       </div>
                     </div>
-                   
+
                   </section>
                 </div>
               </div>
@@ -183,7 +191,7 @@ export default function Register() {
       </main>
 
       {/* End #main */}
-     
+
     </>
   );
 }

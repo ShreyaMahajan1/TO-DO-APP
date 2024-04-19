@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { PacmanLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import ApiServices from './ApiServices';
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [load, setLoad] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const nav = useNavigate();
 
@@ -108,17 +111,22 @@ export default function Login() {
                             <label htmlFor="yourPassword" className="form-label">
                               Password
                             </label>
-                            <input
-                              type="password"
-                              name="password"
-                              className="form-control"
-                              id="yourPassword"
-                              required=""
-                              value={password}
-                              onChange={(e) => { setPassword(e.target.value) }}
-                            />
-                            <div className="invalid-feedback">
-                              Please enter your password!
+                            <div className="input-group has-validation">
+                              <input
+                                type={showPassword ? "text" : "password"} // Toggle password visibility
+                                name="password"
+                                className="form-control"
+                                id="yourPassword"
+                                required=""
+                                value={password}
+                                onChange={(e) => { setPassword(e.target.value) }}
+                              />
+                              <button className="btn btn-outline-secondary" type="button" onClick={() => setShowPassword(!showPassword)}>
+                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                              </button>
+                              <div className="invalid-feedback">
+                                Please enter your password!
+                              </div>
                             </div>
                           </div>
                           <div className="col-12">
@@ -145,7 +153,7 @@ export default function Login() {
                           </div>
                           <div className="col-12">
                             <p className="small mb-0">
-                              Don't have account?{" "}
+                              Don't have an account?{" "}
                               <Link to="/UserRegister">Create an account</Link>
                             </p>
                           </div>
