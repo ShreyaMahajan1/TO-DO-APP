@@ -1,5 +1,5 @@
 # to-do-app
-to do app in react and node 
+to do app developed using mern stack 
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
