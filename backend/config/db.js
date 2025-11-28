@@ -1,11 +1,9 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-mongoose.connect("mongodb://127.0.0.1:27017/todo")
-.then(()=>{
-    console.log("Database Connected")
-})
-.catch((err)=>{
-    console.log("Database not Connected")
-    console.log(err)
-})
+const uri = process.env.MONGODB_URI;
 
+mongoose
+  .connect(uri)
+  .then(() => console.log("MongoDB Connected Successfully"))
+  .catch((err) => console.log("MongoDB Connection Error hai:", err));

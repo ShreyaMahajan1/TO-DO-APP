@@ -69,7 +69,7 @@ export default function Login() {
                     </a>
                   </div>
 
-                  <PacmanLoader color="blue" size={40} cssOverride={obj} loading={load} />
+                  <PacmanLoader color="blue" size={40} cssOverride={obj} loading={load} mt-10/>
                   <section className={load === true ? "d-none" : "my-5"}>
                     <div className="card mb-3">
                       <div className="card-body">
