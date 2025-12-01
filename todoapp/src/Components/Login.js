@@ -68,7 +68,6 @@ export default function Login() {
                       <span className="d-none d-lg-block">TO DO APP</span>
                     </a>
                   </div>
-
                   <PacmanLoader color="blue" size={40} cssOverride={obj} loading={load} mt-40/>
                   <section className={load === true ? "d-none" : "my-5"}>
                     <div className="card mb-3">
