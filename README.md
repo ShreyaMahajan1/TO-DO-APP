@@ -10,9 +10,8 @@ This project allows users to create, update, and delete tasks with a clean UI an
 - ➕ Add new tasks
 - ✏️ Edit tasks
 - ❌ Delete tasks
-- 📌 Mark tasks as completed
 - 🎨 Responsive and simple UI
-- 🔗 MERN stack full integration
+- 🔗 MERN stack full integration CRUD OPERATIONS 
 
 ---
 
