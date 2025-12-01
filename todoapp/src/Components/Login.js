@@ -59,7 +59,7 @@ export default function Login() {
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-lg-4 col-md-6 mt-2 mb-2 d-flex flex-column align-items-center justify-content-center">
-                  <div className="d-flex justify-content-center py-">
+                  <div className="d-flex justify-content-center py-4">
                     <a
                       href="index.html"
                       className="logo d-flex align-items-center w-auto"
@@ -69,7 +69,7 @@ export default function Login() {
                     </a>
                   </div>
 
-                  <PacmanLoader color="blue" size={40} cssOverride={obj} loading={load} mt-10/>
+                  <PacmanLoader color="blue" size={40} cssOverride={obj} loading={load} mt-40/>
                   <section className={load === true ? "d-none" : "my-5"}>
                     <div className="card mb-3">
                       <div className="card-body">
